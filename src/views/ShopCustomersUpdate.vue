@@ -62,6 +62,7 @@ export default {
     </div>
     <button @click="saveChanges">保存</button>
   </div>
+  <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
 <style>

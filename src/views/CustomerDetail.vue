@@ -22,9 +22,10 @@ export default {
       <p><strong>年齢:</strong> {{ customer.age }}</p>
       <p><strong>最終訪問日:</strong> {{ customer.last_visit_date }}</p>
       <p><strong>メモ:</strong> {{ customer.memo }}</p>
-      <router-link :to="{ name: 'shopCustomersEdit', params: { id: $route.params.id } }">編集</router-link>
+      <router-link :to="{ name: 'ShopCustomersUpdate', params: { id: $route.params.id } }">編集</router-link>
     </div>
   </div>
+  <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
 <style>

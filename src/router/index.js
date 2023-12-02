@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ShopCustomers from '../views/ShopCustomers.vue'
-import ShopCustomersNew from '../views/ShopCustomersNew.vue'
+import ShopCustomersCreate from '../views/ShopCustomersCreate.vue'
 import CustomerDetail from '../views/CustomerDetail.vue'
-import ShopCustomersEdit from '../views/ShopCustomersEdit.vue'
+import ShopCustomersUpdate from '../views/ShopCustomersUpdate.vue'
+import ShopBottles from '../views/ShopBottles.vue'
+import ShopBottlesCreate from '../views/ShopBottlesCreate.vue'
+import BottleDetail from '../views/BottleDetail.vue'
+import ShopBottlesUpdate from '../views/ShopBottlesUpdate.vue'
 
 const routes = [
   {
@@ -17,7 +21,7 @@ const routes = [
   },
   {
     path: '/shop/customers/new',
-    component: ShopCustomersNew
+    component: ShopCustomersCreate
   },
   {
     path: '/shop/customers/:id',
@@ -26,8 +30,27 @@ const routes = [
   },
   {
     path: '/shop/customers/:id/edit',
-    name: 'shopCustomersEdit',
-    component: ShopCustomersEdit
+    name: 'ShopCustomersUpdate',
+    component: ShopCustomersUpdate
+  },
+  {
+    path: '/shop/bottles',
+    name: 'bottleList',
+    component: ShopBottles
+  },
+  {
+    path: '/shop/bottles/new',
+    component: ShopBottlesCreate
+  },
+  {
+    path: '/shop/bottles/:id',
+    name: 'BottleDetail',
+    component: BottleDetail
+  },
+  {
+    path: '/shop/bottles/:id/edit',
+    name: 'ShopBottlesUpdate',
+    component: ShopBottlesUpdate
   }
 ]
 
