@@ -35,7 +35,7 @@ export default {
 
 <template>
   <div>
-    <h1>ShopCustomer - 顧客一覧</h1>
+    <h1>顧客一覧</h1>
     <ul>
       <li v-for="customer in shopCustomers" :key="customer.id">
         <router-link :to="`customers/${customer.id}`">{{ customer.name }}</router-link>

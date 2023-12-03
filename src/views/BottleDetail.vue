@@ -42,7 +42,7 @@ onMounted(async () => {
       <router-link :to="{ name: 'ShopBottlesUpdate', params: { id: $route.params.id } }">編集</router-link>
     </div>
   </div>
-  <div><router-link to="/shop">Homeへ</router-link></div>
+  <div><router-link to="/shop">Home</router-link></div>
 </template>
 
 
