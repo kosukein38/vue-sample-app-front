@@ -4,53 +4,63 @@ import { axiosInstance } from '../utils/axios.js';
 import { useRouter } from 'vue-router';
 
 const name = ref('');
-const category = ref(null);
-const price = ref(null);
-const description = ref('');
+const age = ref(0);
+const lastVisitDate = ref(null);
+const memo = ref('');
 const router = useRouter();
 
-const onSubmit = async () => {
+const onClick = async () => {
   try {
-    const response = await axiosInstance.post('shop/bottles', {
+    // 顧客データの作成
+    const data = {
       name: name.value,
-      category: category.value,
-      price: price.value,
-      description: description.value,
-    });
+      age: age.value,
+      last_visit_date: lastVisitDate.value,
+      memo: memo.value
+    };
 
-    console.log('Bottle created successfully:', response.data);
-
-    router.push({ name: 'bottleList' });
+    // 顧客データをサーバーに送信
+    await axiosInstance.post('shop/customers', data);
+    // 顧客一覧ページにリダイレクト
+    router.push({ name: 'customerList' });
   } catch (error) {
-    console.error('Failed to create bottle:', error);
+    console.error('Error creating customer:', error);
   }
 };
 </script>
 
 <template>
   <div>
-    <h1>新規顧客登録</h1>
+    <h1>新規顧客作成</h1>
     <div>
-      <label>名前:</label>
-      <input v-model="name" />
+      <h2>名前</h2>
+      <input class="name" v-model="name" />
     </div>
     <div>
-      <label>カテゴリ:</label>
-      <input v-model="category" />
+      <h2>年齢</h2>
+      <input type="number" class="age" v-model="age" />
     </div>
     <div>
-      <label>価格:</label>
-      <input v-model="price" />
+      <h2>最終訪問日</h2>
+      <input type="date" class="last-visit-date" v-model="lastVisitDate" />
     </div>
     <div>
-      <label>説明:</label>
-      <textarea v-model="description"></textarea>
+      <h2>メモ</h2>
+      <textarea class="memo" v-model="memo"></textarea>
     </div>
-    <button @click="onSubmit">登録</button>
+    <button class="button" @click="onClick">作成</button>
   </div>
-  <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
 <style>
-/* スタイルの定義は省略 */
+.title {
+  width: 500px;
+}
+.contents {
+  width: 500px;
+  height: 300px;
+}
+.button {
+  margin-top: 20px;
+}
 </style>
