@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import WelcomeView from '../views/WelcomeView.vue'
 import HomeView from '../views/HomeView.vue'
+import ShopUsers from '../views/ShopUsers.vue'
+import ShopUsersCreate from '../views/ShopUsersCreate.vue'
+import UserDetail from '../views/UserDetail.vue'
+import ShopUsersUpdate from '../views/ShopUsersUpdate.vue'
 import ShopCustomers from '../views/ShopCustomers.vue'
 import ShopCustomersCreate from '../views/ShopCustomersCreate.vue'
 import CustomerDetail from '../views/CustomerDetail.vue'
@@ -26,6 +30,25 @@ const routes = [
     path: '/shop',
     name: 'HomeView',
     component: HomeView
+  },
+  {
+    path: '/shop/users',
+    name: 'userList',
+    component: ShopUsers
+  },
+  {
+    path: '/shop/users/new',
+    component: ShopUsersCreate
+  },
+  {
+    path: '/shop/users/:id',
+    name: 'userDetail',
+    component: UserDetail
+  },
+  {
+    path: '/shop/users/:id/edit',
+    name: 'ShopUsersUpdate',
+    component: ShopUsersUpdate
   },
   {
     path: '/shop/customers',
