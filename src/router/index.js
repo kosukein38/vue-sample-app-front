@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import WelcomeView from '../views/WelcomeView.vue'
 import HomeView from '../views/HomeView.vue'
 import ShopCustomers from '../views/ShopCustomers.vue'
 import ShopCustomersCreate from '../views/ShopCustomersCreate.vue'
@@ -15,7 +16,13 @@ import ShopKeepedBottlesUpdate from '../views/ShopKeepedBottlesUpdate.vue'
 
 const routes = [
   {
+    path: '/',
+    name: 'WelcomeView',
+    component: WelcomeView
+  },
+  {
     path: '/shop',
+    name: 'HomeView',
     component: HomeView
   },
   {
