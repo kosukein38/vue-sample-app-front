@@ -13,6 +13,8 @@ import ShopKeepedBottles from '../views/ShopKeepedBottles.vue'
 import ShopKeepedBottlesCreate from '../views/ShopKeepedBottlesCreate.vue'
 import KeepedBottleDetail from '../views/KeepedBottleDetail.vue'
 import ShopKeepedBottlesUpdate from '../views/ShopKeepedBottlesUpdate.vue'
+import ShopDetail from '../views/ShopDetail.vue'
+import ShopUpdate from '../views/ShopUpdate.vue'
 
 const routes = [
   {
@@ -82,6 +84,16 @@ const routes = [
     path: '/shop/customers/:customer_id/keeped_bottles/:id/edit',
     name: 'ShopKeepedBottlesUpdate',
     component: ShopKeepedBottlesUpdate
+  },
+  {
+    path: '/shop/shop_info',
+    name: 'ShopDetail',
+    component: ShopDetail
+  },
+  {
+    path: '/shop/edit',
+    name: 'ShopUpdate',
+    component: ShopUpdate
   }
 ]
 
