@@ -1,4 +1,7 @@
 <script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
 import { useRoute } from 'vue-router'; // useRoute を追加
@@ -32,16 +35,21 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <h1>ボトル詳細</h1>
-    <div>
-      <p><strong>名前:</strong> {{ bottle.name }}</p>
-      <p><strong>カテゴリ:</strong> {{ getCategoryName(bottle.category) }}</p>
-      <p><strong>価格:</strong> {{ bottle.price }}</p>
-      <p><strong>説明:</strong> {{ bottle.description }}</p>
-      <router-link :to="{ name: 'ShopBottlesUpdate', params: { id: $route.params.id } }">編集</router-link>
-    </div>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>ボトル詳細</h1>
+      <div>
+        <p><strong>名前:</strong> {{ bottle.name }}</p>
+        <p><strong>カテゴリ:</strong> {{ getCategoryName(bottle.category) }}</p>
+        <p><strong>価格:</strong> {{ bottle.price }}</p>
+        <p><strong>説明:</strong> {{ bottle.description }}</p>
+        <router-link :to="{ name: 'ShopBottlesUpdate', params: { id: $route.params.id } }">編集</router-link>
+      </div>
+    </v-container>
+  </v-main>
   <div><router-link to="/shop">Home</router-link></div>
 </template>
 

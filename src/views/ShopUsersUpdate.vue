@@ -1,4 +1,7 @@
 <script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
 import { useRoute } from 'vue-router'; // useRoute を追加
@@ -47,36 +50,42 @@ const saveChanges = async () => {
 </script>
 
 <template>
-  <div>
-    <h1>ボトル編集</h1>
-    <pre>{{ editedUser }}</pre>
-    <div>
-      <label>名前: </label>
-      <input v-model="editedUser.name" />
-    </div>
-    <div>
-      <label>email: </label>
-      <input v-model="editedUser.email" />
-    </div>
-    <div>
-      <label>役割:</label>
-      <!-- カテゴリ選択肢はenumと対応させ、整数値を直接送信 -->
-      <select v-model="editedUser.role">
-        <option value="employee">一般従業員</option>
-        <option value="leader">リーダー</option>
-        <option value="manager">マネージャー</option>
-      </select>
-    </div>
-    <div>
-      <label>パスワード</label>
-      <input type="password" class="password" v-model="password" />
-    </div>
-    <div>
-      <label>パスワード確認</label>
-      <input type="password" class="password_confirmation" v-model="password_confirmation" />
-    </div>
-    <button @click="saveChanges">保存</button>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>ボトル編集</h1>
+      <pre>{{ editedUser }}</pre>
+      <div>
+        <label>名前: </label>
+        <input v-model="editedUser.name" />
+      </div>
+      <div>
+        <label>email: </label>
+        <input v-model="editedUser.email" />
+      </div>
+      <div>
+        <label>役割:</label>
+        <!-- カテゴリ選択肢はenumと対応させ、整数値を直接送信 -->
+        <select v-model="editedUser.role">
+          <option value="employee">一般従業員</option>
+          <option value="leader">リーダー</option>
+          <option value="manager">マネージャー</option>
+        </select>
+      </div>
+      <div>
+        <label>パスワード</label>
+        <input type="password" class="password" v-model="password" />
+      </div>
+      <div>
+        <label>パスワード確認</label>
+        <input type="password" class="password_confirmation" v-model="password_confirmation" />
+      </div>
+      <button @click="saveChanges">保存</button>
+    </v-container>
+  </v-main>
+
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 

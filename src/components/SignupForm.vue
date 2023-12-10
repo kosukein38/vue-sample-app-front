@@ -1,14 +1,21 @@
 <template>
   <div>
-    <h2>アカウントを登録</h2>
-    <form @submit.prevent="signUp">
-      <input type="text" required placeholder="名前" v-model="name">
-      <input type="email" required placeholder="メールアドレス" v-model="email">
-      <input type="password" required placeholder="パスワード" v-model="password">
-      <input type="password" required placeholder="パスワード（確認用）" v-model="passwordConfirmation">
-      <div class="error">{{ error }}</div>
-      <button type="submit">登録する</button>
-    </form>
+    <v-card class="mx-auto" style="max-width: 500px;">
+      <v-form ref="form" class="pa-4 pt-6" @submit.prevent="signUp">
+        <v-card-title class="d-flex justify-center pa-0 mt-6 mb-3">
+          アカウントを登録
+        </v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field v-model="name" label="ユーザー名" placeholder="山田太郎" required></v-text-field>
+        <v-text-field v-model="email" variant="filled" label="メールアドレス" placeholder="yamada.taro@example.com" type="email" required></v-text-field>
+        <v-text-field v-model="password" variant="filled" label="パスワード" style="min-height: 96px" placeholder="password" type="password" required></v-text-field>
+        <v-text-field v-model="passwordConfirmation" variant="filled" label="パスワード(確認)" style="min-height: 96px" placeholder="password" type="password" required></v-text-field>
+        <div class="error text-center" style="color: red;">{{ error }}</div>
+        <div class="text-center">
+          <v-btn type="submit" class="primary">登録</v-btn>
+        </div>
+      </v-form>
+    </v-card>
   </div>
 </template>
 

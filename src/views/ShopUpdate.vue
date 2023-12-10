@@ -1,7 +1,11 @@
 <script>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { axiosInstance } from '../utils/axios.js';
 
 export default {
+  components: { ApplicationBar, NavigationDrawer, FooterBar },
   data() {
     return {
       editedShop: {
@@ -59,30 +63,35 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h1>顧客編集</h1>
-    <div>
-      <label>名前: </label>
-      <input v-model="editedShop.name" />
-    </div>
-    <div>
-      <label>メールアドレス: </label>
-      <input v-model="editedShop.email" />
-    </div>
-    <div>
-      <label>電話番号: </label>
-      <input v-model="editedShop.tel" />
-    </div>
-    <div>
-      <label>住所: </label>
-      <input v-model="editedShop.address" />
-    </div>
-    <div>
-      <label>URL: </label>
-      <input v-model="editedShop.url" />
-    </div>
-    <button @click="saveChanges">保存</button>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>店舗編集</h1>
+      <div>
+        <label>名前: </label>
+        <input v-model="editedShop.name" />
+      </div>
+      <div>
+        <label>メールアドレス: </label>
+        <input v-model="editedShop.email" />
+      </div>
+      <div>
+        <label>電話番号: </label>
+        <input v-model="editedShop.tel" />
+      </div>
+      <div>
+        <label>住所: </label>
+        <input v-model="editedShop.address" />
+      </div>
+      <div>
+        <label>URL: </label>
+        <input v-model="editedShop.url" />
+      </div>
+      <button @click="saveChanges">保存</button>
+    </v-container>
+  </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 

@@ -1,4 +1,7 @@
 <script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
 import { useRoute } from 'vue-router'; // useRoute を追加
@@ -43,37 +46,42 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <h1>新しいキープボトルの登録</h1>
-    <div>
-      <label>ボトル選択:</label>
-      <!-- ボトルの一覧をセレクトボックスで表示 -->
-      <select v-model="selectedBottleId">
-        <option :value="bottle.id" v-for="bottle in bottles" :key="bottle.id">{{ bottle.name }}</option>
-      </select>
-    </div>
-    <div>
-      <label>ボトル番号:</label>
-      <input v-model="bottleNumber" />
-    </div>
-    <div>
-      <label>状態:</label>
-      <select v-model="state">
-        <option value="unopend">未開封</option>
-        <option value="opend">開封</option>
-        <option value="discard">廃棄</option>
-      </select>
-    </div>
-    <div>
-      <label>開封日:</label>
-      <input type="date" v-model="openDate" />
-    </div>
-    <div>
-      <label>賞味期限:</label>
-      <input type="date" v-model="expirationDate" />
-    </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>新しいキープボトルの登録</h1>
+      <div>
+        <label>ボトル選択:</label>
+        <!-- ボトルの一覧をセレクトボックスで表示 -->
+        <select v-model="selectedBottleId">
+          <option :value="bottle.id" v-for="bottle in bottles" :key="bottle.id">{{ bottle.name }}</option>
+        </select>
+      </div>
+      <div>
+        <label>ボトル番号:</label>
+        <input v-model="bottleNumber" />
+      </div>
+      <div>
+        <label>状態:</label>
+        <select v-model="state">
+          <option value="unopend">未開封</option>
+          <option value="opend">開封</option>
+          <option value="discard">廃棄</option>
+        </select>
+      </div>
+      <div>
+        <label>開封日:</label>
+        <input type="date" v-model="openDate" />
+      </div>
+      <div>
+        <label>賞味期限:</label>
+        <input type="date" v-model="expirationDate" />
+      </div>
+    </v-container>
     <button @click="onSubmit">登録</button>
-  </div>
+  </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
