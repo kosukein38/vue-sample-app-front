@@ -1,8 +1,12 @@
 <script>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { axiosInstance } from '../utils/axios.js'
 import ConfirmDialog from '../components/ConfirmDialog.vue'; // 追加
 
 export default {
+  components: { ApplicationBar, NavigationDrawer, FooterBar, ConfirmDialog },
   data() {
     return {
       shopUsers: []
@@ -30,25 +34,27 @@ export default {
         await this.fetchUsers(); // 削除後にデータを再取得して更新
       }
     }
-  },
-  components: {
-    ConfirmDialog
   }
 };
 </script>
 
 <template>
-  <div>
-    <h1>店員一覧</h1>
-    <div><router-link to="/shop/users/new">従業員追加</router-link></div>
-    <ul>
-      <li v-for="user in shopUsers" :key="user.id">
-        <router-link :to="`users/${user.id}`">{{ user.name }}</router-link>
-        <button @click="deleteUser(user.id)">削除</button>
-      </li>
-    </ul>
-    <!-- 確認ダイアログのコンポーネントを追加 -->
-    <ConfirmDialog ref="confirmDialog"></ConfirmDialog>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>店員一覧</h1>
+      <div><router-link to="/shop/users/new">従業員追加</router-link></div>
+      <ul>
+        <li v-for="user in shopUsers" :key="user.id">
+          <router-link :to="`users/${user.id}`">{{ user.name }}</router-link>
+          <button @click="deleteUser(user.id)">削除</button>
+        </li>
+      </ul>
+      <!-- 確認ダイアログのコンポーネントを追加 -->
+      <ConfirmDialog ref="confirmDialog"></ConfirmDialog>
+    </v-container>
+  </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>

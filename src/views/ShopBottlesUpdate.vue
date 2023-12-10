@@ -1,4 +1,7 @@
 <script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
 import { useRoute } from 'vue-router'; // useRoute を追加
@@ -40,35 +43,40 @@ const saveChanges = async () => {
 </script>
 
 <template>
-  <div>
-    <h1>ボトル編集</h1>
-    <pre>{{ editedBottle }}</pre>
-    <div>
-      <label>名前: </label>
-      <input v-model="editedBottle.name" />
-    </div>
-    <div>
-      <label>カテゴリ: </label>
-      <!-- カテゴリの選択肢をプルダウンで表示 -->
-      <select v-model="editedBottle.category">
-        <option value="shochu">焼酎</option>
-        <option value="whisky">ウィスキー</option>
-        <option value="gin">ジン</option>
-        <option value="ram">ラム</option>
-        <option value="brandy">ブランデー</option>
-        <option value="other">その他</option>
-      </select>
-    </div>
-    <div>
-      <label>価格: </label>
-      <input v-model="editedBottle.price" />
-    </div>
-    <div>
-      <label>説明: </label>
-      <textarea v-model="editedBottle.description"></textarea>
-    </div>
-    <button @click="saveChanges">保存</button>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>ボトル編集</h1>
+      <pre>{{ editedBottle }}</pre>
+      <div>
+        <label>名前: </label>
+        <input v-model="editedBottle.name" />
+      </div>
+      <div>
+        <label>カテゴリ: </label>
+        <!-- カテゴリの選択肢をプルダウンで表示 -->
+        <select v-model="editedBottle.category">
+          <option value="shochu">焼酎</option>
+          <option value="whisky">ウィスキー</option>
+          <option value="gin">ジン</option>
+          <option value="ram">ラム</option>
+          <option value="brandy">ブランデー</option>
+          <option value="other">その他</option>
+        </select>
+      </div>
+      <div>
+        <label>価格: </label>
+        <input v-model="editedBottle.price" />
+      </div>
+      <div>
+        <label>説明: </label>
+        <textarea v-model="editedBottle.description"></textarea>
+      </div>
+      <button @click="saveChanges">保存</button>
+    </v-container>
+  </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 

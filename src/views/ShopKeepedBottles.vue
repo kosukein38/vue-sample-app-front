@@ -1,4 +1,7 @@
 <script>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { axiosInstance } from '../utils/axios.js'
 import ConfirmDialog from '../components/ConfirmDialog.vue';
 // import { useRoute } from 'vue-router';
@@ -6,7 +9,7 @@ import ConfirmDialog from '../components/ConfirmDialog.vue';
 // const route = useRoute();
 
 export default {
-
+  components: { ApplicationBar, NavigationDrawer, FooterBar, ConfirmDialog },
   data() {
     return {
       shopKeepedBottles: []
@@ -31,27 +34,29 @@ export default {
       }
     }
   },
-  components: {
-    ConfirmDialog
-  }
 };
 </script>
 
 <template>
-  <div>
-    <h1>お店のキープボトル一覧</h1>
-    <ul>
-      <li v-for="bottle in shopKeepedBottles" :key="bottle.id">
-        <router-link :to="`/shop/customers/${bottle.customer_id}`">
-          {{ bottle.customer.name }}
-        </router-link> / 
-        <router-link :to="`/shop/customers/${bottle.customer_id}/keeped_bottles/${bottle.id}`">
-          {{ bottle.bottle_number }}
-        </router-link>
-        <button @click="deleteKeepedBottle(bottle.id)">削除</button>
-      </li>
-    </ul>
-    <ConfirmDialog ref="confirmDialog"></ConfirmDialog>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>お店のキープボトル一覧</h1>
+      <ul>
+        <li v-for="bottle in shopKeepedBottles" :key="bottle.id">
+          <router-link :to="`/shop/customers/${bottle.customer_id}`">
+            {{ bottle.customer.name }}
+          </router-link> / 
+          <router-link :to="`/shop/customers/${bottle.customer_id}/keeped_bottles/${bottle.id}`">
+            {{ bottle.bottle_number }}
+          </router-link>
+          <button @click="deleteKeepedBottle(bottle.id)">削除</button>
+        </li>
+      </ul>
+      <ConfirmDialog ref="confirmDialog"></ConfirmDialog>
+    </v-container>
+  </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>

@@ -1,41 +1,49 @@
 <template>
-  <div>
-    <h1>キープボトル編集</h1>
-    <div>
-      <label>ボトル番号: </label>
-      <input v-model="editedKeepedBottle.bottle_number" />
-    </div>
-    <p v-if="editedKeepedBottle.customer">
-        <strong>お客さんの名前:</strong>
-        <router-link :to="`/shop/customers/${editedKeepedBottle.customer_id}`">{{ editedKeepedBottle.customer.name }}</router-link>
-      </p>
-      <p v-if="editedKeepedBottle.bottle">
-        <strong>酒:</strong>
-        <router-link :to="`/shop/bottles/${editedKeepedBottle.bottle_id}`">{{ editedKeepedBottle.bottle.name }}</router-link>
-      </p>
-    <div>
-      <label>状態: </label>
-      <!-- 状態の選択肢をプルダウンで表示 -->
-      <select v-model="editedKeepedBottle.state">
-        <option value="unopend">未開封</option>
-        <option value="opend">開封</option>
-        <option value="discard">廃棄</option>
-      </select>
-    </div>
-    <div>
-      <label>開封日: </label>
-      <input type="date" v-model="editedKeepedBottle.open_date" />
-    </div>
-    <div>
-      <label>賞味期限: </label>
-      <input type="date" v-model="editedKeepedBottle.expiration_date" />
-    </div>
-    <button @click="saveChanges">保存</button>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>キープボトル編集</h1>
+      <div>
+        <label>ボトル番号: </label>
+        <input v-model="editedKeepedBottle.bottle_number" />
+      </div>
+      <p v-if="editedKeepedBottle.customer">
+          <strong>お客さんの名前:</strong>
+          <router-link :to="`/shop/customers/${editedKeepedBottle.customer_id}`">{{ editedKeepedBottle.customer.name }}</router-link>
+        </p>
+        <p v-if="editedKeepedBottle.bottle">
+          <strong>酒:</strong>
+          <router-link :to="`/shop/bottles/${editedKeepedBottle.bottle_id}`">{{ editedKeepedBottle.bottle.name }}</router-link>
+        </p>
+      <div>
+        <label>状態: </label>
+        <!-- 状態の選択肢をプルダウンで表示 -->
+        <select v-model="editedKeepedBottle.state">
+          <option value="unopend">未開封</option>
+          <option value="opend">開封</option>
+          <option value="discard">廃棄</option>
+        </select>
+      </div>
+      <div>
+        <label>開封日: </label>
+        <input type="date" v-model="editedKeepedBottle.open_date" />
+      </div>
+      <div>
+        <label>賞味期限: </label>
+        <input type="date" v-model="editedKeepedBottle.expiration_date" />
+      </div>
+      <button @click="saveChanges">保存</button>
+    </v-container>
+  </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
 <script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
 import { useRoute } from 'vue-router';

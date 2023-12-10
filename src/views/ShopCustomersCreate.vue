@@ -1,4 +1,7 @@
 <script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
 import { ref } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
 import { useRouter } from 'vue-router';
@@ -30,26 +33,31 @@ const onClick = async () => {
 </script>
 
 <template>
-  <div>
-    <h1>新規顧客作成</h1>
-    <div>
-      <h2>名前</h2>
-      <input class="name" v-model="name" />
-    </div>
-    <div>
-      <h2>年齢</h2>
-      <input type="number" class="age" v-model="age" />
-    </div>
-    <div>
-      <h2>最終訪問日</h2>
-      <input type="date" class="last-visit-date" v-model="lastVisitDate" />
-    </div>
-    <div>
-      <h2>メモ</h2>
-      <textarea class="memo" v-model="memo"></textarea>
-    </div>
-    <button class="button" @click="onClick">作成</button>
-  </div>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>新規顧客作成</h1>
+      <div>
+        <h2>名前</h2>
+        <input class="name" v-model="name" />
+      </div>
+      <div>
+        <h2>年齢</h2>
+        <input type="number" class="age" v-model="age" />
+      </div>
+      <div>
+        <h2>最終訪問日</h2>
+        <input type="date" class="last-visit-date" v-model="lastVisitDate" />
+      </div>
+      <div>
+        <h2>メモ</h2>
+        <textarea class="memo" v-model="memo"></textarea>
+      </div>
+      <button class="button" @click="onClick">作成</button>
+    </v-container>
+  </v-main>
 </template>
 
 <style>
