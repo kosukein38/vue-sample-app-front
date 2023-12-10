@@ -1,6 +1,4 @@
 <template>
-  <ApplicationBar/>
-  <FooterBar/>
   <v-main>
     <v-container>
       <div class="container welcome">
@@ -18,12 +16,10 @@
 </template>
 
 <script>
-import ApplicationBar from '../components/ApplicationBar.vue'
-import FooterBar from '../components/FooterBar.vue'
 import LoginForm from '../components/LoginForm.vue'
 import SignupForm from '../components/SignupForm.vue'
 export default  {
-  components: { ApplicationBar, FooterBar, SignupForm, LoginForm },
+  components: {  SignupForm, LoginForm },
   data () {
     return {
       shouldShowLoginForm: true
