@@ -1,10 +1,32 @@
+<template>
+  <ApplicationBar />
+  <NavigationDrawer />
+  <FooterBar />
+  <v-main>
+    <v-container>
+      <h1>店員詳細</h1>
+      <div>
+        <v-text-field label="名前" v-model="user.name" readonly></v-text-field>
+        <v-text-field label="メールアドレス" v-model="user.email" readonly></v-text-field>
+        <v-select label="カテゴリ" :items="roles" v-model="user.role" readonly></v-select>
+      </div>
+    </v-container>
+    <v-container>
+      <v-btn color="primary"><router-link class="btn" :to="{ name: 'ShopUsersUpdate', params: { id: $route.params.id } }">編集</router-link></v-btn>
+    </v-container>
+    <v-container>
+      <v-btn color="primary"><router-link class="btn" to="/shop">Homeへ</router-link></v-btn>
+    </v-container>
+  </v-main>
+</template>
+
 <script setup>
 import ApplicationBar from '../components/ApplicationBar.vue'
 import NavigationDrawer from '../components/NavigationDrawer.vue'
 import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
-import { useRoute } from 'vue-router'; // useRoute を追加
+import { useRoute } from 'vue-router';
 
 const user = ref({
   name: '',
@@ -12,44 +34,16 @@ const user = ref({
   role: '',
 });
 
-// useRoute を利用して route を取得
-const route = useRoute();
-const getRole = (role) => {
-  switch (role) {
-    case 'employee': return '一般従業員';
-    case 'leader': return 'リーダー';
-    case 'manager': return 'manager';
-    default: return '';
-  }
-};
+const roles = ['一般従業員', 'リーダー', 'マネージャー'];
+
+
 
 onMounted(async () => {
-  // バックエンドからボトルの詳細情報を取得
-  const response = await axiosInstance.get(`shop/users/${route.params.id}`);
+  const response = await axiosInstance.get(`shop/users/${useRoute().params.id}`);
   user.value = response.data;
 });
 </script>
 
-<template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
-  <v-main>
-    <v-container>
-    <h1>店員詳細</h1>
-    <div>
-      <p><strong>名前:</strong> {{ user.name }}</p>
-      <p><strong>メールアドレス:</strong> {{ user.email }}</p>
-      <p><strong>カテゴリ:</strong> {{ getRole(user.role) }}</p>
-      <router-link :to="{ name: 'ShopUsersUpdate', params: { id: $route.params.id } }">編集</router-link>
-    </div>
-    </v-container>
-  </v-main>
-  <div><router-link to="/shop">Home</router-link></div>
-</template>
-
-
 <style>
 /* スタイルの定義は省略 */
 </style>
-

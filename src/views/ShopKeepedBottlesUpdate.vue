@@ -1,40 +1,54 @@
 <template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
+  <ApplicationBar />
+  <NavigationDrawer />
+  <FooterBar />
   <v-main>
     <v-container>
       <h1>キープボトル編集</h1>
       <div>
-        <label>ボトル番号: </label>
-        <input v-model="editedKeepedBottle.bottle_number" />
+        <v-text-field
+          v-model="editedKeepedBottle.bottle_number"
+          label="ボトル番号"
+        ></v-text-field>
       </div>
-      <p v-if="editedKeepedBottle.customer">
-          <strong>お客さんの名前:</strong>
-          <router-link :to="`/shop/customers/${editedKeepedBottle.customer_id}`">{{ editedKeepedBottle.customer.name }}</router-link>
-        </p>
-        <p v-if="editedKeepedBottle.bottle">
-          <strong>酒:</strong>
-          <router-link :to="`/shop/bottles/${editedKeepedBottle.bottle_id}`">{{ editedKeepedBottle.bottle.name }}</router-link>
-        </p>
+      <v-row v-if="editedKeepedBottle.customer">
+            <v-col>
+              <label>お客さんの名前</label>
+              <div class="v-text-field__slot">
+                <router-link :to="`/shop/customers/${editedKeepedBottle.customer_id}`">{{ editedKeepedBottle.customer.name }}</router-link>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row v-if="editedKeepedBottle.bottle">
+            <v-col>
+              <label>酒</label>
+              <div class="v-text-field__slot">
+                <router-link :to="`/shop/bottles/${editedKeepedBottle.bottle_id}`">{{ editedKeepedBottle.bottle.name }}</router-link>
+              </div>
+            </v-col>
+          </v-row>
       <div>
-        <label>状態: </label>
-        <!-- 状態の選択肢をプルダウンで表示 -->
-        <select v-model="editedKeepedBottle.state">
-          <option value="unopend">未開封</option>
-          <option value="opend">開封</option>
-          <option value="discard">廃棄</option>
-        </select>
+        <v-select
+          v-model="editedKeepedBottle.state"
+          :items="states"
+          label="状態"
+        ></v-select>
       </div>
       <div>
-        <label>開封日: </label>
-        <input type="date" v-model="editedKeepedBottle.open_date" />
+        <v-text-field
+          v-model="editedKeepedBottle.open_date"
+          label="開封日"
+          type="date"
+        ></v-text-field>
       </div>
       <div>
-        <label>賞味期限: </label>
-        <input type="date" v-model="editedKeepedBottle.expiration_date" />
+        <v-text-field
+          v-model="editedKeepedBottle.expiration_date"
+          label="賞味期限"
+          type="date"
+        ></v-text-field>
       </div>
-      <button @click="saveChanges">保存</button>
+      <v-btn @click="saveChanges">保存</v-btn>
     </v-container>
   </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
@@ -49,20 +63,24 @@ import { axiosInstance } from '../utils/axios.js';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
-// データの初期値をセット
 const editedKeepedBottle = ref({
   bottle_number: '',
-  state: '',
+  state: { value: '' },
   open_date: null,
   expiration_date: null,
 });
+
+const states = [
+  { text: '未開封', value: 'unopend' },
+  { text: '開封', value: 'opend' },
+  { text: '廃棄', value: 'discard' },
+];
 
 const route = useRoute();
 const router = useRouter();
 
 onMounted(async () => {
   try {
-    // バックエンドからキープボトルの詳細情報を取得
     const response = await axiosInstance.get(`shop/customers/${route.params.customer_id}/keeped_bottles/${route.params.id}`);
     editedKeepedBottle.value = response.data;
   } catch (error) {
@@ -72,11 +90,8 @@ onMounted(async () => {
 
 const saveChanges = async () => {
   try {
-    // バックエンドに対して更新リクエストを送信
     await axiosInstance.put(`shop/customers/${route.params.customer_id}/keeped_bottles/${route.params.id}`, editedKeepedBottle.value);
     console.log('Keeped bottle updated successfully');
-
-    // 保存が成功したらリダイレクトなどの処理を追加
     router.go(-1);
   } catch (error) {
     console.error('Failed to update keeped bottle', error);
@@ -85,5 +100,10 @@ const saveChanges = async () => {
 </script>
 
 <style>
-/* スタイルの定義は省略 */
+/* v-text-fieldのスタイルに合わせる */
+.v-text-field__slot {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+}
 </style>

@@ -1,10 +1,33 @@
+<template>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>ボトル詳細</h1>
+      <div>
+        <v-text-field label="名前" :value="bottle.name" readonly></v-text-field>
+        <v-text-field label="カテゴリ" :value="getCategoryName(bottle.category)" readonly></v-text-field>
+        <v-text-field label="価格" :value="bottle.price" readonly></v-text-field>
+        <v-text-field label="説明" :value="bottle.description" readonly></v-text-field>
+        <v-btn color="primary">
+          <router-link class="btn" :to="{ name: 'ShopBottlesUpdate', params: { id: route.params.id } }">編集</router-link>
+        </v-btn>
+      </div>
+    </v-container>
+    <v-container>
+      <v-btn color="primary"><router-link class="btn" to="/shop">Homeへ</router-link></v-btn>
+    </v-container>
+  </v-main>
+</template>
+
 <script setup>
 import ApplicationBar from '../components/ApplicationBar.vue'
 import NavigationDrawer from '../components/NavigationDrawer.vue'
 import FooterBar from '../components/FooterBar.vue'
 import { ref, onMounted } from 'vue';
 import { axiosInstance } from '../utils/axios.js';
-import { useRoute } from 'vue-router'; // useRoute を追加
+import { useRoute } from 'vue-router';
 
 const bottle = ref({
   name: '',
@@ -12,9 +35,8 @@ const bottle = ref({
   price: 0,
   description: ''
 });
-const route = useRoute(); // useRoute を利用して route を取得
+const route = useRoute();
 
-// カテゴリのenumに対応する名称を取得する関数
 const getCategoryName = (category) => {
   switch (category) {
     case 'shochu': return '焼酎';
@@ -28,33 +50,8 @@ const getCategoryName = (category) => {
 };
 
 onMounted(async () => {
-  // バックエンドからボトルの詳細情報を取得
   const response = await axiosInstance.get(`shop/bottles/${route.params.id}`);
   bottle.value = response.data;
 });
 </script>
-
-<template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
-  <v-main>
-    <v-container>
-      <h1>ボトル詳細</h1>
-      <div>
-        <p><strong>名前:</strong> {{ bottle.name }}</p>
-        <p><strong>カテゴリ:</strong> {{ getCategoryName(bottle.category) }}</p>
-        <p><strong>価格:</strong> {{ bottle.price }}</p>
-        <p><strong>説明:</strong> {{ bottle.description }}</p>
-        <router-link :to="{ name: 'ShopBottlesUpdate', params: { id: $route.params.id } }">編集</router-link>
-      </div>
-    </v-container>
-  </v-main>
-  <div><router-link to="/shop">Home</router-link></div>
-</template>
-
-
-<style>
-/* スタイルの定義は省略 */
-</style>
 

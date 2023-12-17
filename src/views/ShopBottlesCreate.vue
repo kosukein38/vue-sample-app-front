@@ -1,3 +1,49 @@
+<template>
+  <ApplicationBar />
+  <NavigationDrawer />
+  <FooterBar />
+  <v-main>
+    <v-container>
+      <h1>新しいボトルの登録</h1>
+      
+      <v-row>
+        <v-col>
+          <label>名前:</label>
+          <v-text-field v-model="name" outlined></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <label>カテゴリ:</label>
+          <v-select v-model="category" :items="categories" item-value="value" outlined></v-select>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <label>価格:</label>
+          <v-text-field v-model="price" type="number" outlined></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <label>説明:</label>
+          <v-textarea v-model="description" outlined></v-textarea>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <v-btn @click="onSubmit" color="primary">登録</v-btn>
+        </v-col>
+      </v-row>
+      
+    </v-container>
+  </v-main>
+</template>
+
 <script setup>
 import ApplicationBar from '../components/ApplicationBar.vue'
 import NavigationDrawer from '../components/NavigationDrawer.vue'
@@ -11,6 +57,14 @@ const category = ref('');
 const price = ref(null);
 const description = ref('');
 const router = useRouter();
+const categories = [
+  { text: '焼酎', value: 'shochu' },
+  { text: 'ウィスキー', value: 'whisky' },
+  { text: 'ジン', value: 'gin' },
+  { text: 'ラム', value: 'ram' },
+  { text: 'ブランデー', value: 'brandy' },
+  { text: 'その他', value: 'other' }
+];
 
 const onSubmit = async () => {
   try {
@@ -29,44 +83,3 @@ const onSubmit = async () => {
   }
 };
 </script>
-
-<template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
-  <v-main>
-    <v-container>
-      <h1>新しいボトルの登録</h1>
-      <div>
-        <label>名前:</label>
-        <input v-model="name" />
-      </div>
-      <div>
-        <label>カテゴリ:</label>
-        <!-- カテゴリ選択肢はenumと対応させ、整数値を直接送信 -->
-        <select v-model="category">
-          <option value="shochu">焼酎</option>
-          <option value="whisky">ウィスキー</option>
-          <option value="gin">ジン</option>
-          <option value="ram">ラム</option>
-          <option value="brandy">ブランデー</option>
-          <option value="other">その他</option>
-        </select>
-      </div>
-      <div>
-        <label>価格:</label>
-        <input v-model="price" />
-      </div>
-      <div>
-        <label>説明:</label>
-        <textarea v-model="description"></textarea>
-      </div>
-      <button @click="onSubmit">登録</button>
-    </v-container>
-  </v-main>
-  <div><router-link to="/shop">Homeへ</router-link></div>
-</template>
-
-<style>
-/* スタイルの定義は省略 */
-</style>

@@ -1,3 +1,60 @@
+<template>
+  <ApplicationBar/>
+  <NavigationDrawer/>
+  <FooterBar/>
+  <v-main>
+    <v-container>
+      <h1>顧客詳細</h1>
+      <div>
+        <div>
+          <label>名前:</label> {{ customer.name }}
+        </div>
+
+        <div>
+          <label>年齢:</label> {{ customer.age }}
+        </div>
+
+        <div>
+          <label>最終訪問日:</label> {{ customer.last_visit_date }}
+        </div>
+
+        <div>
+          <label>メモ:</label> {{ customer.memo }}
+        </div>
+        <v-container>
+          <v-btn color="primary">
+            <router-link class="btn" :to="{ name: 'ShopCustomersUpdate', params: { id: $route.params.id } }">編集</router-link>
+          </v-btn>
+        </v-container>
+        <v-container>
+          <div v-if="customer.keeped_bottles && customer.keeped_bottles.length > 0">
+            <h4>キープボトル</h4>
+            <ul>
+              <li v-for="bottle in customer.keeped_bottles" :key="bottle.id">
+                <div>
+                  <label>ボトル番号:</label> {{ bottle.bottle_number }}
+                </div>
+  
+                <div>
+                  <label>状態:</label> {{ bottle.state }}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </v-container>
+      </div>
+    </v-container>
+    <v-container>
+      <v-btn color="primary">
+        <router-link class="btn" :to="`/shop/customers/${$route.params.id}/keeped_bottles/new`">キープボトル追加</router-link>
+      </v-btn>
+    </v-container>
+    <v-container>
+      <v-btn color="primary"><router-link class="btn" to="/shop">Homeへ</router-link></v-btn>
+    </v-container>
+  </v-main>
+</template>
+
 <script>
 import ApplicationBar from '../components/ApplicationBar.vue'
 import NavigationDrawer from '../components/NavigationDrawer.vue'
@@ -17,36 +74,3 @@ export default {
   }
 }
 </script>
-
-<template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
-  <v-main>
-    <v-container>
-      <h1>顧客詳細</h1>
-      <div>
-        <p><strong>名前:</strong> {{ customer.name }}</p>
-        <p><strong>年齢:</strong> {{ customer.age }}</p>
-        <p><strong>最終訪問日:</strong> {{ customer.last_visit_date }}</p>
-        <p><strong>メモ:</strong> {{ customer.memo }}</p>
-        <router-link :to="{ name: 'ShopCustomersUpdate', params: { id: $route.params.id } }">編集</router-link>
-        <div v-if="customer.keeped_bottles && customer.keeped_bottles.length > 0">
-          <h4>キープボトル</h4>
-          <ul>
-            <li v-for="bottle in customer.keeped_bottles" :key="bottle.id">
-              <p><strong>ボトル番号:</strong> {{ bottle.bottle_number }}</p>
-              <p><strong>状態:</strong> {{ bottle.state }}</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </v-container>
-  </v-main>
-  <div><router-link to="/shop">Homeへ</router-link></div>
-  <div><router-link :to="`/shop/customers/${$route.params.id}/keeped_bottles/new`">キープボトル追加</router-link></div>
-</template>
-
-<style>
-/* スタイルの定義は省略 */
-</style>
