@@ -19,23 +19,51 @@ export default {
 </script>
 
 <template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
+  <ApplicationBar />
+  <NavigationDrawer />
+  <FooterBar />
   <v-main>
     <v-container>
       <h1>店舗詳細</h1>
-      <div>
-        <p><strong>店舗名:</strong> {{ shop.name }}</p>
-        <p><strong>email:</strong> {{ shop.email }}</p>
-        <p><strong>電話番号:</strong> {{ shop.tel }}</p>
-        <p><strong>住所:</strong> {{ shop.address }}</p>
-        <p><strong>url:</strong> {{ shop.url }}</p>
-        <router-link :to="{ name: 'ShopUpdate' }">編集</router-link>
-      </div>
+      <v-row>
+        <v-col cols="12">
+          <v-card>
+            <v-card-text>
+              <v-form>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field label="店舗名" v-model="shop.name" readonly></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="Email" v-model="shop.email" readonly></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="電話番号" v-model="shop.tel" readonly></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="住所" v-model="shop.address" readonly></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="URL" v-model="shop.url" readonly></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-btn color="primary">
+        <router-link class="btn" :to="{ name: 'ShopUpdate' }">編集</router-link>
+      </v-btn>
+    </v-container>
+    <v-container>
+      <v-btn color="primary">
+        <router-link class="btn" to="/shop">Homeへ</router-link>
+      </v-btn>
     </v-container>
   </v-main>
-  <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
 <style>

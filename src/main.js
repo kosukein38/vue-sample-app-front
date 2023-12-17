@@ -18,7 +18,9 @@ router.beforeEach(async (to, from, next) => {
       console.log(to.path)
       next('/')
     } else {
-      console.log('ここ')
+      // CSRFトークンを取得してaxiosのデフォルトヘッダーにセット
+      const csrfToken = response.headers['x-csrf-token']
+      axiosInstance.defaults.headers.common['X-CSRF-Token'] = csrfToken
       next()
     }
   } catch (error) {

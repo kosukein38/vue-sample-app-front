@@ -1,79 +1,77 @@
-<script>
-import ApplicationBar from '../components/ApplicationBar.vue'
-import NavigationDrawer from '../components/NavigationDrawer.vue'
-import FooterBar from '../components/FooterBar.vue'
-import { axiosInstance } from '../utils/axios.js';
-
-export default {
-  components: { ApplicationBar, NavigationDrawer, FooterBar },
-  data() {
-    return {
-      editedCustomer: {
-        name: '',
-        age: 0,
-        last_visit_date: null,
-        memo: '',
-      },
-    };
-  },
-  created() {
-    // コンポーネントが作成された際に顧客の既存データを取得
-    this.fetchCustomerData();
-  },
-  methods: {
-    async fetchCustomerData() {
-      try {
-        const response = await axiosInstance.get(`shop/customers/${this.$route.params.id}`);
-        // 顧客の既存データを取得し、editedCustomerにセット
-        this.editedCustomer = response.data;
-      } catch (error) {
-        console.error('Failed to fetch customer data', error);
-      }
-    },
-    async saveChanges() {
-      try {
-        await axiosInstance.put(`shop/customers/${this.$route.params.id}`, this.editedCustomer);
-        console.log('Customer updated successfully');
-
-        // 保存が成功したらリダイレクトなどの処理を追加
-        this.$router.go(-1);
-      } catch (error) {
-        console.error('Failed to update customer', error);
-      }
-    },
-  },
-};
-</script>
-
 <template>
-  <ApplicationBar/>
-  <NavigationDrawer/>
-  <FooterBar/>
+  <ApplicationBar />
+  <NavigationDrawer />
+  <FooterBar />
   <v-main>
     <v-container>
       <h1>顧客編集</h1>
       <div>
         <label>名前: </label>
-        <input v-model="editedCustomer.name" />
+        <v-text-field v-model="editedCustomer.name" outlined></v-text-field>
       </div>
       <div>
         <label>年齢: </label>
-        <input v-model="editedCustomer.age" />
+        <v-text-field v-model="editedCustomer.age" outlined></v-text-field>
       </div>
       <div>
         <label>最終訪問日: </label>
-        <input type="date" v-model="editedCustomer.last_visit_date" />
+        <v-text-field v-model="editedCustomer.last_visit_date" type="date" outlined></v-text-field>
       </div>
       <div>
         <label>メモ: </label>
-        <textarea v-model="editedCustomer.memo"></textarea>
+        <v-textarea v-model="editedCustomer.memo" outlined></v-textarea>
       </div>
-      <button @click="saveChanges">保存</button>
+      <v-btn @click="saveChanges" color="primary">保存</v-btn>
     </v-container>
   </v-main>
   <div><router-link to="/shop">Homeへ</router-link></div>
 </template>
 
-<style>
-/* スタイルの定義は省略 */
-</style>
+<script setup>
+import ApplicationBar from '../components/ApplicationBar.vue'
+import NavigationDrawer from '../components/NavigationDrawer.vue'
+import FooterBar from '../components/FooterBar.vue'
+import { ref, onMounted } from 'vue';
+import { axiosInstance } from '../utils/axios.js';
+import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+
+const editedCustomer = ref({
+  name: '',
+  age: 0,
+  last_visit_date: null,
+  memo: '',
+});
+
+const route = useRoute();
+const router = useRouter();
+
+onMounted(async () => {
+  // router.params が定義されており、かつ 'id' プロパティが含まれていることを確認
+  if (route.params && route.params.id) {
+    await fetchCustomerData();
+  } else {
+    console.error('無効なルートパラメータ');
+  }
+});
+
+const fetchCustomerData = async () => {
+  try {
+    const response = await axiosInstance.get(`shop/customers/${route.params.id}`);
+    editedCustomer.value = response.data;
+  } catch (error) {
+    console.error('顧客データの取得に失敗しました', error);
+  }
+};
+
+const saveChanges = async () => {
+  try {
+    await axiosInstance.put(`shop/customers/${route.params.id}`, editedCustomer.value);
+    console.log('顧客データが正常に更新されました');
+    // 保存が成功したらリダイレクトなどの処理を追加
+    router.go(-1);
+  } catch (error) {
+    console.error('顧客データの更新に失敗しました', error);
+  }
+};
+</script>
