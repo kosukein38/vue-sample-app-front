@@ -7,26 +7,28 @@ import { axiosInstance } from './utils/axios.js'
 
 // ナビゲーションガード
 router.beforeEach(async (to, from, next) => {
-  // ログイン状態を確認
   try {
+    // 仮のエラーを発生させるために、サーバーに存在しないエンドポイントを指定
     const response = await axiosInstance.get('/login_status')
     const isLoggedIn = response.data.logged_in
 
-    // ログアウトしていればリダイレクト
     if (!isLoggedIn && to.path !== '/') {
-      console.log(isLoggedIn)
-      console.log(to.path)
+      console.log('ログアウトしているためリダイレクト:', isLoggedIn, to.path)
+      return next('/')
+    }
+
+    const csrfToken = response.headers['x-csrf-token']
+    axiosInstance.defaults.headers.common['X-CSRF-Token'] = csrfToken
+    next()
+  } catch (error) {
+    console.error('ログイン状態の確認に失敗しました', error)
+
+    // エラーが発生した場合もリダイレクトしないように、現在のルートに留まる
+    if (to.path !== '/') {
       next('/')
     } else {
-      // CSRFトークンを取得してaxiosのデフォルトヘッダーにセット
-      const csrfToken = response.headers['x-csrf-token']
-      axiosInstance.defaults.headers.common['X-CSRF-Token'] = csrfToken
       next()
     }
-  } catch (error) {
-    // エラーハンドリング
-    console.error('ログイン状態の確認に失敗しました', error)
-    next('/')
   }
 })
 
